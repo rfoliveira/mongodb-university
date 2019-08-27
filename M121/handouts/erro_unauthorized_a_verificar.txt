@@ -1,0 +1,42 @@
+MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.movies.aggregate(pipeline).itcount()
+assert: command failed: {
+        "operationTime" : Timestamp(1566686069, 11),
+        "ok" : 0,
+        "errmsg" : "not authorized on movies to execute command { aggregate: \"movies\", pipeline: [ { $match: { imdb.rating: { $lte: 7.0 }, genres: { $nin: [ \"Crime\", \"Horror\" ] }, rated: { $in: [ \"PG\", \"G\" ] }, languages: { $all: [ \"English\", \"Japanese\" ] } } } ], cursor: {}, $clusterTime: { clusterTime: Timestamp(1566685972, 1), signature: { hash: BinData(0, 36E29101833F068F761EA08246FF65EA5DD99DD7), keyId: 6698341139830800385 } }, $db: \"movies\" }",
+        "code" : 13,
+        "codeName" : "Unauthorized",
+        "$clusterTime" : {
+                "clusterTime" : Timestamp(1566686069, 11),
+                "signature" : {
+                        "hash" : BinData(0,"JzKuk0eXteXH8tlDRAEDO1n8fU0="),
+                        "keyId" : NumberLong("6698341139830800385")
+                }
+        }
+} : aggregate failed
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:16:14
+assert.commandWorked@src/mongo/shell/assert.js:403:5
+DB.prototype._runAggregate@src/mongo/shell/db.js:260:9
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1212:12
+@(shell):1:1
+
+2019-08-24T19:34:36.002-0300 E QUERY    [thread1] Error: command failed: {
+        "operationTime" : Timestamp(1566686069, 11),
+        "ok" : 0,
+        "errmsg" : "not authorized on movies to execute command { aggregate: \"movies\", pipeline: [ { $match: { imdb.rating: { $lte: 7.0 }, genres: { $nin: [ \"Crime\", \"Horror\" ] }, rated: { $in: [ \"PG\", \"G\" ] }, languages: { $all: [ \"English\", \"Japanese\" ] } } } ], cursor: {}, $clusterTime: { clusterTime: Timestamp(1566685972, 1), signature: { hash: BinData(0, 36E29101833F068F761EA08246FF65EA5DD99DD7), keyId: 6698341139830800385 } }, $db: \"movies\" }",
+        "code" : 13,
+        "codeName" : "Unauthorized",
+        "$clusterTime" : {
+                "clusterTime" : Timestamp(1566686069, 11),
+                "signature" : {
+                        "hash" : BinData(0,"JzKuk0eXteXH8tlDRAEDO1n8fU0="),
+                        "keyId" : NumberLong("6698341139830800385")
+                }
+        }
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:16:14
+assert.commandWorked@src/mongo/shell/assert.js:403:5
+DB.prototype._runAggregate@src/mongo/shell/db.js:260:9
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1212:12
+@(shell):1:1

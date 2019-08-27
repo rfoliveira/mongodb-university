@@ -1,0 +1,74 @@
+Conexão MongoDB - atlas
+mongo "mongodb://cluster0-shard-00-00-jxeqq.mongodb.net:27017,cluster0-shard-00-01-jxeqq.mongodb.net:27017,cluster0-shard-00-02-jxeqq.mongodb.net:27017/aggregations?replicaSet=Cluster0-shard-0" --authenticationDatabase admin --ssl -u m121 -p aggregations --norc
+
+Once you've connected, list the existing collections of the aggregations database. Your output should be similar to this one:
+
+Cluster0-shard-0:PRIMARY> show collections
+air_airlines
+air_alliances
+air_routes
+bronze_banking
+customers
+employees
+exoplanets
+gold_banking
+icecream_data
+movies
+nycFacilities
+silver_banking
+solarSystem
+stocks
+system.views
+
+Aggregation framework é formado de pipelines.
+Pipelines é uma sequência de execução de uma agregação.
+Cada etapa do pipeline é chamada de stages.
+Há no mínimo 3 stages: 
+- $match
+- $project
+- $group
+
+-----------------------------------------
+Exemplo:
+db.userColl.aggregate([{ stage1 }, { stage2 }, { _stageN }], { options })
+
+-----------------------------------------
+Outro exemplo:
+db.solarSystem.aggregate([{
+	$match: {
+		atmosphericComposition: { $in: [/02/] },
+		meanTemperature: { $gte: -40, $lte: 40 }
+	}
+}, {
+	$project: {
+		_id: 0,
+		name: 1,
+		hasMoons: { $gt: ["$numberOfMoons", 0] }
+	}
+}], { allowDiskUse: true })
+
+-----------------------------------------
+Field path: "$fieldName". Ex.: ("$numberOfMoons")
+System Variable: "$$UPPERCASE" Ex.: ("$$CURRENT")
+User Variable: "$$foo"
+
+-----------------------------------------
+
+Pipelines são sempre um array de um ou mais stages
+Stages são compostos de um ou mais operadores de agregação ou expressões
+
+-----------------------------------------
+
+Correlação de comandos
+db.solarSystem.count({ type: { $ne: "Star"}}) ==> 8
+db.solarSystem.aggregate([{ $match: { type: { $ne: "Star" }}}, { $count: "planets" }]) ==> { "planets": 8 }
+
+-----------------------------------------
+Informações sobre $match
+- A $match stage may contain a $text query operator, but it must be the first state in a pipeline
+- $match should come early in an aggregation pipeline
+- You cannot use $where in $match
+- $match uses the same query syntax as find
+
+Conexão MongoDB - lab 1
+mongo "mongodb://cluster0-shard-00-00-jxeqq.mongodb.net:27017,cluster0-shard-00-01-jxeqq.mongodb.net:27017,cluster0-shard-00-02-jxeqq.mongodb.net:27017/aggregations?replicaSet=Cluster0-shard-0" --authenticationDatabase admin --ssl -u m121 -p aggregations --norc
